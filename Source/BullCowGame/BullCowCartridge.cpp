@@ -65,18 +65,18 @@ void UBullCowCartridge::ProcessGuess(const FString& Guess)
     // Check If Isogram
     if (!IsIsogram(Guess))
     {
-        PrintLine(TEXT("No repeating letters, guess again"));
+        LoseLife();
+        PrintLine(TEXT("No repeating letters, guess again. \nYou have %i lives left"), Lives);
         return;
     }
 
     // Remove Life
-    PrintLine(TEXT("Lost a life!"));
-    --Lives;
+    LoseLife();
             
     if (Lives <= 0)
     {
         ClearScreen();
-        PrintLine(TEXT("You hav eno lives left!"));
+        PrintLine(TEXT("You have no lives left!"));
         PrintLine(TEXT("The hiddenword was: %s"), *HiddenWord);
         EndGame();
         return;
@@ -141,4 +141,10 @@ FBullCowCount UBullCowCartridge::GetBullCows(const FString& Guess) const
         }
     }
     return Count;
+}
+
+void UBullCowCartridge::LoseLife()
+{
+    PrintLine(TEXT("Lost a life!"));
+    --Lives;
 }
